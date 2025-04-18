@@ -1,0 +1,36 @@
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editors
+*.swp
+*.swo
+*.sublime-*
+.idea/
+.vscode/
+*.code-workspace
+
+# Python virtualenvs or node modules if applicable later
+env/
+venv/
+node_modules/
+
+# Build outputs or logs
+*.log
+*.out
+*.bak
+*.tmp
+*.pyc
+__pycache__/
+
+# Export formats
+*.pdf
+
+# Temp files
+*~
+
+# Ignore dev and extras by default
+/extras/
+/*.vsix
+*.png
+*.svg

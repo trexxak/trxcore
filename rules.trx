@@ -1,0 +1,133 @@
+§RuleI|
+    title:Triadic Grouping Is Required;
+    description:A valid Trexxak expression must contain a symbolic opening, a payload body, and a structural closure.
+    description:This triadic model replaces binary bracketing with directional scope.
+    description:Example: | Hello World _| is a complete symbolic unit.
+_|
+§RuleII|
+    title:Only Valid Closure Is underscore bar;
+    description:The only recognized and stack-safe closure is the combination `_|`
+    description:Alternatives such as `__` or `|_` are not valid terminators in Trexxak and lead to structural ambiguity.
+_|
+§RuleIII|
+    title:Symbolic Direction and Role;
+    description:The vertical bar `|` begins symbolic flow; the underscore `_` concludes it.
+    description:Together, they form an intentional scope: `| payload _|`
+    description:Symbolically, `|` is initiatory and `_` is receptive — each Trexxak group represents directed transformation.
+_|
+§RuleIV|
+    title:Escape and Identity Forms;
+    description:The backslash `\` is the escape operator, used to produce literal meaning in structural tokens.
+    description:\| — literal vertical bar
+_|
+§RuleV|
+    title:Conditional Bundles;
+    description:Trexxak conditions are expressed via scope, not keywords.
+    description:A conditional structure consists of:
+    description:!| ... _| — an intent block (assertion)
+    description:?| ... _| — an optional conditional check
+    description:| ... _| — a fallback default scope
+    description:Each is a valid triadic expression. Their evaluation order defines a symbolic decision.
+_|
+§RuleVI|
+    title:Symbolic Binding;
+    description:A symbol can be bound to a value using identity prefixes.
+    description:#x|value _| — defines a mutable variable named x
+    description:§x|value _| — defines a constant (immutable truth) named x
+    description:Symbolic binding declares a named truth or placeholder, scoped with triadic structure.
+_|
+§RuleVII|
+    title:Functional Expression Scope;
+    description:To invoke symbolic behavior, Trexxak uses the assertion form `!|`
+    description:Arguments are passed using colon syntax: !|function:arg1,arg2 _|
+    description:Each payload is symbolic and composable; arguments may be literals, variables, or nested scopes.
+    description:Function structure is symbolic, not procedural — arguments are expressions, not types.
+_|
+§RuleVIII|
+    title:Named Binding and Structural Sequencing;
+    description:Trexxak uses symbolic punctuation to express structure:
+    description:Colon `:` — binds a key to a value: key:value
+    description:Semicolon `;` — separates entries at the same level: key1:value1;key2:value2
+    description:Comma `,` — creates value tuples inside a binding: key:a,b,c
+    description:Together, these allow flat and shallow structures without explicit nesting.
+_|
+§RuleIX|
+    title:Named Binding with Depth;
+    description:Trexxak uses chained colons to express hierarchy and symbolic depth.
+    description:Example: A:b:c — A contains b, which contains c.
+    description:Multiple entries can be chained or branched using semicolons: A:b:c;d:e
+    description:There is no need for brackets — structural nesting is inferred by symbolic chaining.
+_|
+§RuleX|
+    title:Symbolic Type Resolution;
+    description:Trexxak infers value types from their symbolic shape.
+    description:Examples:
+    description:42 → integer
+    description:3.14 or .5 → float
+    description:0xFF → hexadecimal
+    description:Words like red or Nova → symbolic labels
+    description:There are no explicit type declarations — identity is derived from form.
+_|
+§RuleXI|
+    title:Symbolic Inheritance Chains;
+    description:Trexxak expresses symbolic ancestry and membership through colon-chains.
+    description:A: B: C defines a hierarchy — A is the root, B inherits A, C inherits B.
+    description:Capitalized names suggest abstract types or ancestors.
+    description:Lowercase names typically represent properties or instance data.
+    description:This chain expresses identity and lineage in a pure symbolic form.
+_|
+§RuleXII|
+    title:Symbolic Time Anchoring;
+    description:The at-symbol `@` allows symbolic references to time, state history, or temporal evaluation.
+    description:Examples:
+    description:@now — the current time (if supported by runtime)
+    description:@#x — the last known value of variable x
+    description:@2#x — value of x two steps ago
+    description:Time in Trexxak is symbolic — it represents position in narrative or state, not system time.
+_|
+§RuleXIII|
+    title:Symbolic Iteration and Flow;
+    description:All values in Trexxak are inherently iterable — including tuples, variables, and function results.
+    description:Iteration is expressed with invocation:
+    description:!|#list _| — streams each item in #list through the enclosed scope
+    description:Each item is symbolically bound during iteration, without explicit loop constructs.
+    description:Trexxak assumes flow over form — structure implies repetition.
+_|
+§RuleXIV|
+    title:Identity Invocation Model;
+    description:Variables, functions, and sequences share the same invocation form: !|#x _|
+    description:Trexxak makes no hard distinction between a value and a function — both are symbolic identities.
+    description:Calling a symbol yields its result:
+    description:A value yields itself, a tuple yields its items, a function yields its result.
+    description:Nested calls resolve recursively without syntax change.
+_|
+§RuleXV|
+    title:Symbolic Action Model;
+    description:The exclamation mark `!` asserts an intention: !|action _|
+    description:Trexxak expressions may yield no value — symbolic actions can exist purely as side effects.
+    description:This mirrors human language: "Speak" or "Leave" need no return value to be meaningful.
+    description:Intent is expressed without requiring evaluation or response.
+_|
+§RuleXVI|
+    title:Strings Are Atomic;
+    description:A string in Trexxak is a single symbolic unit.
+    description:Strings do not automatically decompose into character sequences.
+    description:They are interpreted as-is and retain internal whitespace or punctuation unless explicitly streamed.
+    description:Quoting is optional — most strings are inferred from structure.
+_|
+§RuleXVII|
+    title:Symbolic Type Binding and Resolution;
+    description:Trexxak uses symbolic prefixes to declare identity roles:
+    description:# — mutable variable
+    description:§ — constant (immutable)
+    description:@ — temporal or contextual reference
+    description:Combined with the identity escape forms (Rule IV), these markers enable full symbolic scope control.
+    description:Types are not declared — they are resolved through usage and symbolic role.
+_|
+§RuleXVIII|
+    title:Comma-Sensitive Streaming;
+    description:Commas `,` separate values only when used within streamable or sequence-binding contexts.
+    description:Outside such contexts, commas are treated as part of the symbolic payload and do not imply splitting.
+    description:A practical rule of thumb: if a comma is followed by whitespace (`, `), it is likely part of the text.
+    description:If no whitespace follows (`,x` or `x,y`), it is interpreted as a structural delimiter.
+_|

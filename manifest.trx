@@ -1,0 +1,15 @@
+§manifest|
+    name:Manifest;
+    description:Manifest file for the TRX language;
+    extension:trx;
+    version:1.1;
+    author:Markus;
+    license:MIT;
+    symbols:\|,_,\,!,?,#,§,@,:,;,;,,., ;
+    identifier:[A-Za-z_][A-Za-z0-9_]*;
+    whitespace: +;
+    newline:,; ;
+    newpage:;; ;
+    escape:\|;
+    comment:comment;
+_|

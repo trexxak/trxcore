@@ -1,0 +1,11 @@
+§Boot|description:Startup_sequence_for_a_Trexxak_program _|
+
+#msg|Trexxak boot sequence initiated _|
+!|log:#msg _|
+
+#modules|manifest,rules,prelude _|
+!|log:Modules loaded:#modules _|
+
+#state|booted _|
+!|log:System state set to:#state _|
+
