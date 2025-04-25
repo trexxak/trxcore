@@ -1,0 +1,29 @@
+!?|condition1
+    !|log:Branch 1 _|
+_|
+
+!?|condition2
+    !|log:Branch 2 _|
+_|
+
+?!|condition3
+    !|log:Branch 3 (only if previous failed) _|
+_|
+
+?!|
+    !|log:Final fallback _|
+_|
+
+comment|inversed _|
+
+-!?|state:offline
+    !|log:System is online _|
+_|
+
+-?!|state:sleep
+    !|log:Still running _|
+_|
+
+-?!|
+    !|log:System unresponsive _|
+_|

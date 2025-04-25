@@ -1,0 +1,199 @@
+#CurrentRules|
+version:1.2;
+date:@now;
+derivesFrom:§RulesHistoric@version:1.1;
+description:This ruleset condenses and reorganizes the original Rules I–XIX into a cleaner structure.
+description:Each rule is triadic, symbolic, and scoped by intent. Sub-rules cover expressive and poetic extensions.
+description:Rule‑sets are namespaced blocks with `version` and `date` metadata.
+description:Use `#rulesHistoric` for all prior versions and `#rulesCurrent` for the live spec.
+example:
+    #rulesHistoric\| version:1.0; date:@2025-03-01\| … _\|
+    #rulesCurrent\| version:1.1; date:@2025-04-19\| … _\|
+_|
+
+§RuleΩ|
+title:Spoken Paradigm & Symbolic Ethos;
+description:Trexxak is a language of intention — closer to breath and voice than machine and syntax;
+description:It is not merely parsed. It is pronounced — inwardly, outwardly, symbolically;
+description:Every expression is a gesture of will, not just a structure of logic;
+description:Triadic forms mimic breath: `\|` to inhale, the payload to speak, and `_\|` to exhale;
+description:Symbols carry nuance, emotion, and flow — utterances encoded in form;
+description:It values intent over structure, resonance over output, and presence over perfection;
+description:What compiles is not as important as what **lands**, what is **felt**;
+description:Trexxak is to be spoken, listened to, and lived — a grammar of becoming.
+description: Rule Ω is not for machines. It is for us.
+_|
+
+§RuleI|
+title:Triadic Structure & Direction;
+description:Every valid Trexxak expression is a triadic group: it begins with `\|`, contains a symbolic payload, and ends with `_\|`.
+description:This model replaces binary brackets with directional intent.
+description:The initiator `\|` begins a symbolic scope. The underscore `_` concludes it.
+description:The only valid closure is `_\\|`. Alternatives such as `__` or `\|_` are structurally ambiguous and disallowed.
+description:This triadic model is the foundation of all Trexxak grammar.
+example: \| Hello _\|
+_|
+
+§RuleII|
+title:Reserved Symbols, Escapes & Bindings;
+description:Trexxak defines a minimal set of reserved symbols with fixed meanings:
+description:`\|` — start scope;
+description:`_\|` — end scope;
+description:`:` — bind value;
+description:`;` — separate entries at the same level;
+description:`,` — define value tuples inside a binding;
+description:`@` — temporal or contextual anchor;
+description:`!`, `?` — assert or conditionally express intent;
+description:`#`, `§` — variable or constant;
+description:`\` — escape symbol for literals.
+description:`:ignore` — semantic directive to disable interpretation;
+description:Any scope containing `:ignore` will be excluded from runtime evaluation;
+description:This enables true semantic filtering without inline comments.
+description:`comment:` blocks imply `:ignore` automatically;
+description:Example: `#debug| :ignore _|` disables a block completely during interpretation.
+description:Together, these bindings allow shallow and flexible expression of symbolic structure without requiring brackets.
+_|
+
+§RuleIII|
+title:Conditional Flow & Assertion Bundles;
+description:Trexxak expresses logic through symbolic scope initiators:
+description:`!?\|` represents a conditional assertion;
+description:`?\|` defines a symbolic condition;
+description:Fallbacks are composed manually — there is no "else", only alternate assertions;
+description:Each component of a symbolic decision tree is a valid triadic expression:
+description:`!\| ... _\|` — intent block;
+description:`?\| ... _\|` — condition check;
+description:`\| ... _\|` — fallback default;
+description:Suffixes modify scope modality:
+description:`\| ... _\|!` — fallback (run if no other scope matched);
+description:`\|_ ... _\|?` — reactive listener (run if triggered externally);
+description:`\|_ ... _\|!` — reactive fallback (run if triggered or else register);
+example: |_ #ready _|! — run now or when `#ready` triggers;
+description:All forms still require the `_\|` closure.
+_|
+
+§RuleIV|
+title:Symbol Declaration & Scope;
+description:`#x\|value _\|` declares a mutable variable named `x`;
+description:`§x\|value _\|` declares a constant (immutable truth);
+description:`@x` refers to symbolic memory or time-based values;
+description:These prefixes define role — not type. There is no static type system in Trexxak;
+description:Type and behavior are resolved through symbolic structure and flow context;
+description:Together, they allow control over mutability, persistence, and historic referencing.
+_|
+
+§RuleV|
+title:Invocation, Action & Streaming;
+description:Trexxak uses the assertion form `!\|... _\|` to invoke symbolic behavior;
+description:There is no hard distinction between functions, variables, or lists — all symbolic identities may be invoked using `!|... _|`.
+description:Arguments are passed using colon syntax: `!\|function:arg1,arg2 _\|`;
+description:Tuples like `1,2,3` are treated as symbolic sequences;
+description:The comma `,` is a **streaming delimiter** when inside tuples, function args, or value groups;
+description:Outside these, commas are treated as literal punctuation;
+description:Heuristically `,x` or `x,y` implies structure; `, x` implies natural language;
+description:This dual role enables both symbolic pipelines and expressive, text-friendly formatting;
+description:`!\|#x _\|` streams the contents of `#x`, whether it is a value, tuple, or callable;
+description:`!\|... _\|` may produce side effects even without returning a value.
+description:Trexxak permits actions without return values — like "Open the door" or "Speak". Symbolic execution respects intent over output.
+_|
+
+§RuleVI|
+title:Symbolic Nesting via Path Declaration;
+description:Trexxak expresses structure by chaining symbolic identities using `:`:
+description:`A:B:C` means C is nested under B, which is nested under A;
+description:`;` separates top-level declarations;
+description:`,` may express sibling items at the same depth;
+description:Example:
+description:`A:B:X,Y` declares X and Y as siblings under B;
+description:`A:B:C;A:B:D` are treated as parallel declarations that resolve into symbolic structure;
+description:This syntax supports shallow trees using flat paths — structure emerges through repetition.
+_|
+
+§RuleVII|
+title:Type Resolution by Shape;
+description:Trexxak infers symbolic value types by surface form:
+description:42 → integer;
+description:3.14 or .5 → float;
+description:0xFF → hexadecimal;
+description:Values used in textual context (not assigned, invoked, or declared) are treated as string literals;
+description:String literals are **atomic**: they do not decompose into characters unless explicitly streamed;
+description:Quoting is optional — most strings are inferred from structure;
+description:All other values are symbolic identifiers unless their role suggests otherwise.
+description:There are no explicit type declarations — identity is derived from structure and use.
+_|
+
+§RuleVIII|
+title:Inheritance & Symbolic Composition;
+description:Trexxak uses colon-chains to express symbolic ancestry and structure:
+description:`Vehicle:Car:Speedster` implies that `Speedster` inherits from `Car`, which inherits from `Vehicle`;
+description:Capitalized names typically imply abstract types or ancestral roles;
+description:Lowercase names represent fields or instance values.
+description:Example:
+description:\|#obj:Entity:Player:health:100 _\|
+description:\|#obj:Entity:Player:mana:50 _\|
+description:These declare `obj` as an instance of `Entity → Player` with attached symbolic fields.
+description:Such chains are symbolic — they are resolved by inheritance, not memory layout.
+_|
+
+§RuleIX|
+title:Temporal Anchors, History & Symbolic Pointers;
+description:`@` refers to symbolic time and state:
+description:`@#x` = last known value of `#x`;
+description:`@2#x` = value of `#x` two steps ago;
+description:`@now` = current runtime clock (if supported);
+description:`@` may also point into symbolic structures like logs, streams, and state timelines;
+description:Time in Trexxak is symbolic — it expresses position, not mechanical duration.
+_|
+
+§RuleX|
+title:Streaming & Iteration;
+description:Every value in Trexxak is iterable by default;
+description:Invocation of `!\|#x _\|` streams its contents;
+description:Tuples stream one by one; values return themselves;
+description:This enables declarative iteration and symbolic unfolding;
+description:Structure implies flow — symbolic expressions stream themselves naturally when called.
+_|
+
+§RuleXI|
+title:Symbolic Polarity & Inversion;
+description:Trexxak uses symbolic polarity prefixes to invert or strengthen logical expressions;
+description:`+*x` affirms that x must strongly match—a “definite is” (analogous to multiplying x by +1);
+description:`-*x` denies that x must match—a “definite is not” (analogous to multiplying x by –1);
+description:`!?|x` poses a question: “if x”;
+description:`!?*-x` or stylistically `-!?|x` asks: “if not x”;
+description:`!?+*x` poses a more emphatic match: “if truly x”;
+description:`!*x _|` or `?-*x` are valid but stylistically discouraged;
+description:The `*` operator flips or reinforces the semantic intent of the target using numeric polarity;
+description:Use polarity markers for precise conditional chains without fallback hacks.
+_|
+
+§RuleXII|
+title:Logical Connectives & Branching;
+description:Within a question or conditional (`!?|… _|` / `?!|… _|`), use:
+description:`/` for logical OR — at least one condition must hold;
+description:`&` for logical AND — all conditions must hold simultaneously;
+description:These connectives allow complex branching without extra nesting.
+example:
+    ?!|A/B     _|  ; if A or B
+    ?!|A&B    _|  ; if A and B
+    ?!|A/B&C/D _| ; if A or (B and C) or D
+_|
+
+§RuleXIII|
+title:Conditional Mirroring & Else;
+description:Trexxak reverses and mirrors “if” logic using the `?!` form;
+description:`!?|x` — “if x” (call into question);
+description:`?!|y` — “else-if y” (only tested if the prior `!?` failed);
+description:`?!|`  — “else” (only runs if all prior branches failed);
+description:`-?!|z` — “else-if not z” (combines inversion and mirroring);
+example:
+    !?|state:hungry
+        !|log:Eat _|
+    _|
+    ?!|state:tired
+        !|log:Rest _|
+    _|
+    ?!|
+        !|log:All good _|
+    _|
+_|

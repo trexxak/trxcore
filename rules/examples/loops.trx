@@ -1,0 +1,28 @@
+§SymbolicLoops|
+description:Examples of symbolic iteration using `@` and correct triadic closure
+_|
+
+#comment|Basic list loop _|
+#loop_input|sun,moon,stars _|
+!|@loop_input
+    #item|#stream _|
+    !|log:You saw #item _|
+_|
+
+#comment|Scoped stream + index counter _|
+#names|Nova,Luna,Sky _|
+!|@names
+    #name|#stream _|
+    #i|@loop.count _|
+    !|log:#i: #name _|
+_|
+
+#comment|Loop with conditional break _|
+#targets|red,blue,green,STOP,yellow _|
+!|@targets
+    #item|#stream _|
+    !?|#item:STOP
+        !|log:Halting loop at STOP _|
+    _|
+    !|log:Processing #item _|
+_|

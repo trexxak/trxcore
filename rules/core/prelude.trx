@@ -1,0 +1,68 @@
+§prelude|
+    description:Core symbolic functions and constants available in all Trexxak environments;
+    version:1.2;
+    author:Markus;
+    license:MIT;
+_|
+
+comment: IO / Side Effects
+§log|
+    description:Print a value or expression to output;
+    args:1;
+    category:IO;
+_|
+§echo|
+    description:Repeat a value without modification;
+    category:IO;
+_|
+§warn|
+    description:Emit a symbolic warning with intent;
+    category:IO;
+_|
+§sing|
+    description:Output value in performative expressive mode;
+    category:IO;
+_|
+
+comment: Evaluation and Control Flow
+§set|description:Assign a value to a variable using symbolic reference _|
+§add|description:Perform symbolic addition or concatenation _|
+§typeof|description:Return the inferred symbolic type of a value _|
+§identity|description:Return the identity label or binding name of a value _|
+§call|description:Invoke a function or identity by reference _|
+
+comment: Expression and Meta
+§mock|description:Express symbolic ridicule or irony toward a value _|
+§emphasize|description:Strengthen symbolic tone of value or assertion _|
+§dream|description:Invoke speculative or alternative interpretation layer _|
+§trace|description:Output symbolic call path or evaluation history _|
+
+comment: Scope Interaction and Context
+§absorb|description:Ingest values from outer scope into current context _|
+§consume|description:Extract values from inner scope into outer context _|
+§reveal|description:Expose hidden or encapsulated values _|
+§burn|description:Destroy symbolic entity or unlink scope _|
+
+comment: Invocation and Symbolic Constructs
+§summon|description:Instantiate or refer to a named symbolic construct _|
+§wait|description:Pause evaluation for symbolic or literal duration _|
+
+comment: User Interaction and Input
+§prompt|description:Request user input or confirmation _|
+§ask|description:Query the user or external interface for input _|
+§bleed|description:Allow symbolic overlap into adjacent scope _|
+
+comment: Constants
+§TRUE|1 _|
+§FALSE|0 _|
+§NULL|_|
+
+comment: Reserved / Runtime Concepts
+§ignore|
+    description:Reserved keyword; disables a scope and its contents during evaluation;
+    category:meta;
+_|
+§version|
+    description:Return current interpreter or manifest version;
+    category:meta;
+_|

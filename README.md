@@ -29,7 +29,7 @@ Just this:
 | File | Description |
 |------|-------------|
 | `manifest.trx` | Symbol and version declaration |
-| `rules.trx` | Canonical grammar rules (I–XVIII) |
+| `rules_current.trx` | Canonical grammar rules |
 | `prelude.trx` | Core symbolic functions |
 | `boot.trx` | Minimal startup expression |
 | `hello_nova.trx` | Introduction via narrative stream |

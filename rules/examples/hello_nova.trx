@@ -24,12 +24,13 @@ _|
 #comment|Conditional branch based on symbolic feeling _|
 !?|#feeling:incomplete
     !|emphasize:There is still a piece missing _|
-_| 
-|!|log:Stability nominal _| _|
+_|
+?!|#feeling:incomplete
+    !|log:Stability nominal _|
+_|
 
 #comment|Define symbolic loopback echo message _|
 #echo|!|log:Hello #who again _| _|
-
 !|#echo _|
 
 #comment|Speculative symbolic closure _|

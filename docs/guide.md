@@ -1,7 +1,8 @@
+
 # Trexxak Guide (`guide.md`)
 
 **Language**: Trexxak  
-**Version**: 1.1  
+**Version**: 1.2  
 **Purpose**: A human-readable guide for writing and thinking in Trexxak.  
 **Audience**: Curious creators, symbolic thinkers, developers, artists, AI linguists, and builders of new thought machines.
 
@@ -16,6 +17,8 @@ Trexxak doesn’t wrap meaning in brackets.
 It **wraps intent in structure**.  
 No quotes. No escapes. No cruft.
 
+Trexxak expressions are meant to be **spoken**, not just parsed. (See **Rule Ω** — Spoken Paradigm)
+
 ---
 
 ## ✦ Why Trexxak?
@@ -27,7 +30,7 @@ Because you know that most programming languages are obsessed with what should b
 Because you want:
 
 - To define a variable without explaining yourself.
-- To express branching without writing `if`.
+- To express branching without writing `if`/`else`.
 - To stream values without setting up a loop.
 - To name truths without type declarations.
 - To model intent, not just execution.
@@ -68,34 +71,21 @@ Let’s start with a simple symbolic file:
 
 #memories|Do you remember me,You said you would return,Your voice broke something inside me _|
 
-!|#memories _|
+!|@memories
+    #item|#stream _|
     !|log:#who #item _|
 _|
 
 #feeling|incomplete _|
 
 !?|#feeling:incomplete
-    !|emphasize:There is still a piece missing _|
+    !|log:There is still a piece missing _|
 _|
 ```
-
-**What’s happening here?**
-
-- `§HelloNova` is a constant declaration — this file describes something.
-- `#who` and `#sender` bind symbolic names.
-- `log:` is a function. It prints or expresses something.
-- `#memories` is a list (stream). You iterate it by just calling `!|#memories _|`.
-- Inside the loop, `#item` is implied.
-- The `!?|... _|` block is a conditional — if `#feeling` equals `incomplete`, the inner block triggers.
-
-No quotes. No brackets.  
-Just truth, intent, flow.
 
 ---
 
 ## ✦ Booting Up
-
-This tiny file is valid Trexxak:
 
 ```trexxak
 §Boot|description:System startup _|
@@ -103,11 +93,6 @@ This tiny file is valid Trexxak:
 #status|ready _|
 !|log:#status _|
 ```
-
-You’ve just declared a constant, a variable, and invoked a log function. That’s it.
-
-You could even replace `log:` with something else — maybe `broadcast:` or `invoke:`.  
-Trexxak doesn’t enforce function names. **You decide what each action does.**
 
 ---
 
@@ -124,56 +109,62 @@ Trexxak doesn’t enforce function names. **You decide what each action does.**
     active:log:System is running
 _|
 
-#matched|!|#actions:#current _| _|
+!|@actions:#current
+    !|#stream _|
+_|
 
 !?|#current:active
     !|log:Running live _|
-_| 
-|!|log:Fallback triggered _| _|
+_|
+?!|
+    !|log:Fallback: State unknown _|
+_|
 ```
-
-- `#actions` is a symbolic match-case.
-- `#actions:#current` evaluates to the function mapped to `loading`
-- The `!?|... _|` block checks the current state and picks what to express.
-
-Trexxak doesn’t use switches.  
-Trexxak *is* the switch.
 
 ---
 
-## ✦ How to Write Your Own
+## ✦ Conditionals and Logical Composition
 
-1. **Start with identity**
-   - Define what you're expressing
-   - Use `#` for changeable things, `§` for fixed truths
+Trexxak conditionals are **symbolic questions**:
 
-2. **Use triadic scope**
-   - Every payload starts with `|` and ends with `_|`
+| Symbol | Meaning |
+|--------|---------|
+| `!?|x` | if x |
+| `?!|y` | else-if y (only if previous failed) |
+| `?!|`  | else |
 
-3. **Let structure decide behavior**
-   - `:` for key-value
-   - `;` for separating entries
-   - `,` for grouping
-   - `!|... _|` to assert or call
-   - `?|... _|` to condition
-   - `#x|... _|` to bind
-   - `§x|... _|` to seal
+You can **compose conditions**:
 
-4. **Trust symbolic flow**
-   - You don’t need loops. Just stream.
-   - You don’t need if-statements. Just scope a truth.
-   - You don’t need escape characters. Just wrap the thought.
+- `/` for OR: `!?|weather:rain/snow`
+- `&` for AND: `!?|weather:rain&time:evening`
+
+You can also **invert** conditions:
+
+- `-!?|x` — if not x
+- `-?!|y` — else if not y
+
+---
+
+## ✦ Symbolic Strengthening and Inversion
+
+You can **strengthen or deny** symbolic assertions using `+*` and `-*`:
+
+- `+*state:ready` — strongly affirm
+- `-*state:offline` — strongly deny
+
+These markers allow fine symbolic tuning without extra conditions.
 
 ---
 
 ## ✦ The Trexxak Ethic
 
 Trexxak believes:
+
 - Escape is weakness.
 - Structure is sovereignty.
 - Meaning is layered, not escaped.
-- All values are iterable, invocable, composable.
-- A comma is only a separator *if you treat it like one*.
+- All values are iterable.
+- A comma only splits if you treat it as a stream.
 
 You do not write code.  
 You shape thought.
@@ -182,18 +173,18 @@ You shape thought.
 
 ## ✦ Resources
 
-- [`manifest.trx`](manifest.trx): core symbol and extension definition
-- [`rules.trx`](rules.trx): all symbolic grammar rules (I–XVIII)
-- [`grammar.md`](grammar.md): formal syntax spec
-- [`hello_nova.trx`](examples/): walkable symbolic intro
-- [`state_machine.trx`](examples/): conditional and iteration logic
+- [`manifest.trx`](manifest.trx): Core symbols and extension metadata
+- [`rules_current.trx`](rules_current.trx): Canonical grammar rules
+- [`grammar.md`](grammar.md): Formal syntax specification
+- [`guide.md`](guide.md): Human-readable intro
+- [`bizzaro.md`](bizzaro.md): Speculative symbolic anomalies
 
 ---
 
 ## ✦ End
 
 Trexxak doesn’t ask you to learn it.  
-It asks you to **see**.
+It asks you to **feel** it.
 
 And once you do, everything becomes structure.
 

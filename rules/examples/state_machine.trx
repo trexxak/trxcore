@@ -1,0 +1,35 @@
+§StateMachine|
+description:A symbolic branching and looping example with memory and fallback _|
+
+#comment|Initialize current state and previous memory _|
+#current_state|idle _|
+#previous_state|@#current_state _|
+
+#comment|Declare symbolic state set and transition map _|
+#states|idle,loading,active,error,shutdown _|
+#transitions|idle:loading;loading:active;active:error;error:shutdown _|
+
+#comment|Symbolic log entry — intro with history _|
+!|log:Current state is:#current_state; Previous was:#previous_state _|
+
+#comment|Define symbolic actions for each state _|
+#actions|
+    idle:log:System is resting;
+    loading:log:System is loading;
+    active:log:System is active;
+    error:log:An error has occurred;
+    shutdown:log:System is shutting down _|
+
+#comment|Attempt primary state action _|
+!|#actions:#current_state _|
+
+#comment|Fallback if no matching state exists (symbolic default) _|
+| log:State #current_state is undefined _|!
+
+#comment|Reactive reminder if returning to idle from any path _|
+|_ #current_state:idle _|?
+
+!|log:System has returned to stillness. Listening... _|
+
+#comment|Optional: symbolic memory registration _|
+#last_idle|@#current_state _|

@@ -1,0 +1,7 @@
+#event|startup _|
+|_ #event:startup _|?
+!|log:System has started _|
+
+#state|offline _|
+|_ #state:online _|!
+!|log:Will wait for connection or react when available _|

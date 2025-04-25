@@ -1,45 +1,60 @@
+§RulesHistoric|
+    version:1.1;
+    date:@2025-04-19;
+    description:This was the first version of the Trexxak ruleset.
+    description:It establishes the foundational principles and syntax for the Trexxak language.
+§Foundations|
+    description:This is the foundational ruleset for Trexxak, a symbolic language designed for expressive and flexible programming.
+    description:It emphasizes triadic structure, symbolic binding, and a unique approach to iteration and flow.
+    description:These rules are intended to guide the development of Trexxak expressions and structures.
+    description:They are not exhaustive but provide a framework for understanding the language's core principles.
 §RuleI|
     title:Triadic Grouping Is Required;
     description:A valid Trexxak expression must contain a symbolic opening, a payload body, and a structural closure.
     description:This triadic model replaces binary bracketing with directional scope.
-    description:Example: | Hello World _| is a complete symbolic unit.
+    description:Example: \| Hello World _\| is a complete symbolic unit.
 _|
 §RuleII|
     title:Only Valid Closure Is underscore bar;
-    description:The only recognized and stack-safe closure is the combination `_|`
-    description:Alternatives such as `__` or `|_` are not valid terminators in Trexxak and lead to structural ambiguity.
+    description:The only recognized and stack-safe closure is the combination `_\|`
+    description:Alternatives such as `__` or `\|_` are not valid terminators in Trexxak and lead to structural ambiguity.
 _|
 §RuleIII|
     title:Symbolic Direction and Role;
-    description:The vertical bar `|` begins symbolic flow; the underscore `_` concludes it.
-    description:Together, they form an intentional scope: `| payload _|`
-    description:Symbolically, `|` is initiatory and `_` is receptive — each Trexxak group represents directed transformation.
-_|
+    description:The vertical bar `\|` begins symbolic flow; the underscore `_` concludes it.
+    description:Together, they form an intentional scope: `\| payload _\|`
+    description:Symbolically, `\|` is initiatory and `_` is receptive — each Trexxak group represents directed transformation.
+_| _|
+§Syntax|
+    description:This section outlines the syntax rules for Trexxak expressions.
+    description:These rules define how to construct valid expressions and the expected behavior of various symbols.
+    description:They are essential for understanding how to write and interpret Trexxak code.
+    
 §RuleIV|
     title:Escape and Identity Forms;
     description:The backslash `\` is the escape operator, used to produce literal meaning in structural tokens.
-    description:\| — literal vertical bar
+    description:\\| — literal vertical bar
 _|
 §RuleV|
     title:Conditional Bundles;
     description:Trexxak conditions are expressed via scope, not keywords.
     description:A conditional structure consists of:
-    description:!| ... _| — an intent block (assertion)
-    description:?| ... _| — an optional conditional check
-    description:| ... _| — a fallback default scope
+    description:!\| ... _\| — an intent block (assertion)
+    description:?\| ... _\| — an optional conditional check
+    description:\| ... _\| — a fallback default scope
     description:Each is a valid triadic expression. Their evaluation order defines a symbolic decision.
 _|
 §RuleVI|
     title:Symbolic Binding;
     description:A symbol can be bound to a value using identity prefixes.
-    description:#x|value _| — defines a mutable variable named x
-    description:§x|value _| — defines a constant (immutable truth) named x
+    description:#x\|value _\| — defines a mutable variable named x
+    description:§x\|value _\| — defines a constant (immutable truth) named x
     description:Symbolic binding declares a named truth or placeholder, scoped with triadic structure.
 _|
 §RuleVII|
     title:Functional Expression Scope;
-    description:To invoke symbolic behavior, Trexxak uses the assertion form `!|`
-    description:Arguments are passed using colon syntax: !|function:arg1,arg2 _|
+    description:To invoke symbolic behavior, Trexxak uses the assertion form `!\|`
+    description:Arguments are passed using colon syntax: !\|function:arg1,arg2 _\|
     description:Each payload is symbolic and composable; arguments may be literals, variables, or nested scopes.
     description:Function structure is symbolic, not procedural — arguments are expressions, not types.
 _|
@@ -57,7 +72,11 @@ _|
     description:Example: A:b:c — A contains b, which contains c.
     description:Multiple entries can be chained or branched using semicolons: A:b:c;d:e
     description:There is no need for brackets — structural nesting is inferred by symbolic chaining.
-_|
+_| _|
+§Semantics|
+    description:This section outlines the semantic rules for Trexxak expressions.
+    description:These rules define the meaning and behavior of various constructs in the language.
+    description:They are essential for understanding how to interpret and execute Trexxak code.
 §RuleX|
     title:Symbolic Type Resolution;
     description:Trexxak infers value types from their symbolic shape.
@@ -89,13 +108,13 @@ _|
     title:Symbolic Iteration and Flow;
     description:All values in Trexxak are inherently iterable — including tuples, variables, and function results.
     description:Iteration is expressed with invocation:
-    description:!|#list _| — streams each item in #list through the enclosed scope
+    description:!\|#list _\| — streams each item in #list through the enclosed scope
     description:Each item is symbolically bound during iteration, without explicit loop constructs.
     description:Trexxak assumes flow over form — structure implies repetition.
 _|
 §RuleXIV|
     title:Identity Invocation Model;
-    description:Variables, functions, and sequences share the same invocation form: !|#x _|
+    description:Variables, functions, and sequences share the same invocation form: !\|#x _\|
     description:Trexxak makes no hard distinction between a value and a function — both are symbolic identities.
     description:Calling a symbol yields its result:
     description:A value yields itself, a tuple yields its items, a function yields its result.
@@ -103,11 +122,15 @@ _|
 _|
 §RuleXV|
     title:Symbolic Action Model;
-    description:The exclamation mark `!` asserts an intention: !|action _|
+    description:The exclamation mark `!` asserts an intention: !\|action _\|
     description:Trexxak expressions may yield no value — symbolic actions can exist purely as side effects.
     description:This mirrors human language: "Speak" or "Leave" need no return value to be meaningful.
     description:Intent is expressed without requiring evaluation or response.
-_|
+_|_|
+§Advanced|
+    description:This section outlines advanced rules and features of Trexxak.
+    description:These rules define more complex constructs and behaviors in the language.
+    description:They are intended for experienced users who want to explore the full capabilities of Trexxak.
 §RuleXVI|
     title:Strings Are Atomic;
     description:A string in Trexxak is a single symbolic unit.
@@ -130,4 +153,37 @@ _|
     description:Outside such contexts, commas are treated as part of the symbolic payload and do not imply splitting.
     description:A practical rule of thumb: if a comma is followed by whitespace (`, `), it is likely part of the text.
     description:If no whitespace follows (`,x` or `x,y`), it is interpreted as a structural delimiter.
+_|
+§RuleXIX|
+    title:Scope Execution Modalities;
+    description:Trexxak scopes encode both intent and timing by combining prefix, core scope, and suffix markers.
+    description:!\|… _\| — Immediate assertion: run payload now, unconditionally.
+    description:?\|… _\| — Conditional assertion: run payload if predicate is true.
+    description:\|_… _\|? — Reactive registration (async): register payload as a listener to run when externally triggered (reversed invocation).
+    description:\|… _\|! — Fallback assertion: run payload only if no other scope has applied (default path).
+    description:\|… _\|? — Default conditional: run payload only if no other scope applied and an optional condition holds.
+    description:\|_… _\|! — Reactive assertion: register payload and also invoke immediately if the trigger has already fired.
+    description:In all cases, `_\|` (closure) remains the only valid terminator; async is not an exception, but simply a reversed call pattern.
+_|
+§RuleXX|
+    title:Versioning & Archival;
+    description:Rule‑sets are namespaced blocks with `version` and `date` metadata.
+    description:Use `#rulesHistoric` for all prior versions and `#rulesCurrent` for the live spec.
+    example:
+        #rulesHistoric\| version:1.0; date:@2025-03-01\| … _\|
+        #rulesCurrent\| version:1.1; date:@2025-04-19\| … _\|
+_|
+§RuleXXI|
+    title:Scope Ignoring & Semantic Filtering;
+    description:The keyword `ignore` may appear as a free-standing property in any scope.
+    description:If present, the entire scope and all nested content are excluded from interpretation.
+    description:This allows semantic disabling of blocks without relying on comments.
+    example:
+        #debug\| :ignore _\|
+        #legacyCode\| :ignore _\|
+    description:Free-floating `comment:` blocks imply `:ignore` implicitly.
+    description:Ignored scopes are invisible to the interpreter and excluded from logic evaluation.
+_|
+_|
+
 _|
