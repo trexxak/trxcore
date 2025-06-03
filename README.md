@@ -37,7 +37,7 @@ Just this:
 | `network_chat.trx` | Example of networked messaging |
 | `grammar.md` | Formal syntax specification |
 | `guide.md` | Human-readable intro & tutorial |
-| `bizzaro.md` | Speculative syntax — symbolic side-channel |
+| `bizarro.md` | Speculative syntax — symbolic side-channel |
 
 ## ✦ Quick Start
 

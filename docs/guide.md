@@ -179,7 +179,7 @@ You shape thought.
 - [`rules_current.trx`](rules_current.trx): Canonical grammar rules
 - [`grammar.md`](grammar.md): Formal syntax specification
 - [`guide.md`](guide.md): Human-readable intro
-- [`bizzaro.md`](bizzaro.md): Speculative symbolic anomalies
+- [`bizarro.md`](bizarro.md): Speculative symbolic anomalies
 
 ---
 
