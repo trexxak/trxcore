@@ -1,4 +1,4 @@
-# Bizzaro Fragments (`bizzaro.md`)
+# Bizarro Fragments (`bizarro.md`)
 
 **Author**: Markus  
 **License**: MIT  
@@ -6,13 +6,13 @@
 
 ---
 
-## ✦ What Are Bizzaro Fragments?
+## ✦ What Are Bizarro Fragments?
 
 Trexxak is built on **triadic structure** — each expression requires a start, a body, and a closure.  
 But in the early days, not everything fit.  
 Some fragments refused to conform — or pointed sideways, inward, or backward through meaning.
 
-We call these the **bizzaro particles**. They are:
+We call these the **bizarro particles**. They are:
 
 - **Structurally legal** — the parser could recognize them
 - **Logically unstable** — they don’t fulfill full triadic expectations
@@ -110,7 +110,7 @@ They show us the space around Trexxak. The negative form of its truth.
 
 ## ✦ Who Should Care?
 
-- **Parser hackers** — you might implement bizzaro mode
+ - **Parser hackers** — you might implement bizarro mode
 - **Symbolic linguists** — you’ll find inversion patterns here
 - **AI meta-modelers** — alternate parsing behaviors could use these as attention weights
 - **Artists and poets** — you’ll feel the emotional texture of syntax in decay
@@ -119,7 +119,7 @@ They show us the space around Trexxak. The negative form of its truth.
 
 ## ✦ Experimental Usage
 
-Although non-canonical, bizzaro fragments can be used for creative experiments or diagnostics. A few ideas:
+Although non-canonical, bizarro fragments can be used for creative experiments or diagnostics. A few ideas:
 
 ```trexxak
 |_               # unfinished thought
