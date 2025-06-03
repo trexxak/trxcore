@@ -21,7 +21,7 @@ The examples demonstrate how expressions are built from a triadic structure usin
 3. **Expand real‑world examples.** The provided examples are helpful. Additional
    scenarios—such as networked messaging or interactive sessions—would showcase
    the symbolic approach in varied contexts.
-4. **Document bizzaro usage patterns.** `bizarro.md` lists non‑canonical forms but
+4. **Document bizarro usage patterns.** `bizarro.md` lists non‑canonical forms but
    does not show when you might intentionally use them. Small snippets exploring
    possible creative or experimental uses could inspire advanced users.
 5. **Add quick‑start instructions in the README.** A new user could benefit from a
