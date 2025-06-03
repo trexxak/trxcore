@@ -17,7 +17,7 @@ Trexxak doesn’t wrap meaning in brackets.
 It **wraps intent in structure**.  
 No quotes. No escapes. No cruft.
 
-Trexxak expressions are meant to be **spoken**, not just parsed. (See **Rule Ω** — Spoken Paradigm)
+Trexxak expressions are meant to be **spoken**, not just parsed. (See **Rule Ω** — Spoken Paradigm in `rules/core/rules_current.trx`)
 
 ---
 
@@ -54,6 +54,8 @@ Every Trexxak expression is built from **three parts**:
 You can nest them. Stream them. Declare them. Rewire them.
 
 You do not escape. You **declare**.
+
+![Scope nesting diagram](img/scope_nesting.svg)
 
 ---
 

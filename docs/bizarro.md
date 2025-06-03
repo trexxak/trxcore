@@ -117,6 +117,20 @@ They show us the space around Trexxak. The negative form of its truth.
 
 ---
 
+## ✦ Experimental Usage
+
+Although non-canonical, bizzaro fragments can be used for creative experiments or diagnostics. A few ideas:
+
+```trexxak
+|_               # unfinished thought
+__|ghost payload # contextless snippet
+|\\|meta _|      # literal scope symbol for artful effect
+```
+
+These forms should stay out of production code but may inspire extended grammars or glitch aesthetics.
+
+---
+
 ## ✦ Final Note
 
 These fragments are not rejected. They are **remembered**.

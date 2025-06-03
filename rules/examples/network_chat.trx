@@ -1,0 +1,11 @@
+§NetworkChat|description:Symbolic network messaging demo _|
+
+#target|Luna _|
+#message|Hello from Nova _|
+
+!|net.send:#target,#message _|
+
+|_ net.receive:#target _|?
+    #incoming|#stream _|
+    !|log:Received #incoming from #target _|
+_|
