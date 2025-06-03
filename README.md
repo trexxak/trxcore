@@ -34,9 +34,21 @@ Just this:
 | `boot.trx` | Minimal startup expression |
 | `hello_nova.trx` | Introduction via narrative stream |
 | `state_machine.trx` | Example of symbolic branching |
+| `network_chat.trx` | Example of networked messaging |
 | `grammar.md` | Formal syntax specification |
 | `guide.md` | Human-readable intro & tutorial |
 | `bizzaro.md` | Speculative syntax — symbolic side-channel |
+
+## ✦ Quick Start
+
+1. Install **Python 3**.
+2. Run the interpreter demo on the boot example:
+
+```bash
+python interpreter_example.py rules/examples/boot.trx
+```
+
+3. Modify an example file such as `hello_nova.trx` and run the script again to see the structure change.
 
 ## ✦ Examples
 
@@ -49,6 +61,8 @@ Trexxak is self-explanatory if you let it be:
     !|log:Running _|
 _|
 ```
+
+See `rules/examples/network_chat.trx` for a simple networked messaging scenario.
 
 ## ✦ Philosophy
 

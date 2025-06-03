@@ -174,4 +174,6 @@ Expressions mimic breath:
 
 ---
 
+For the complete text of each rule, see [`rules/core/rules_current.trx`](../rules/core/rules_current.trx).
+
 # ✅ End of Grammar Specification
