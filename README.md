@@ -74,8 +74,14 @@ Trexxak believes:
 - Every structure is iterable.
 - Commas only split if you let them.
 
-Trexxak doesn’t try to be a language.  
+Trexxak doesn’t try to be a language.
 It tries to be **a mirror for structure**.
+
+## ✦ Benchmarks & Further Reading
+
+Run `python benchmark_extended.py` to time the parser and translator across all
+example programs. A summary of the results appears in
+`docs/impact_report.md`.
 
 ## ✦ Status
 
