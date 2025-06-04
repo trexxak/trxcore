@@ -1,7 +1,7 @@
 import os
 import time
-from parser import parse_file
-from translator import translate_file
+from .parser import parse_file
+from .translator import translate_file
 
 
 def benchmark(iterations: int = 200):

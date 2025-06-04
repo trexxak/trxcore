@@ -1,7 +1,7 @@
 import unittest
 import ast
 import time
-from parser import parse_file
+from trxcore.parser import parse_file
 
 HELLO_PY = """
 who = 'Nova'

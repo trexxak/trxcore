@@ -1,5 +1,8 @@
 # Trexxak
 
+[![CI](https://github.com/trexxak/trxcore/actions/workflows/ci.yml/badge.svg)](https://github.com/trexxak/trxcore/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 > A symbolic grammar of truth, intent, and transformation.
 
 Trexxak is a minimalist symbolic language — not for machines, but for **minds**.
@@ -44,11 +47,12 @@ Just this:
 1. Install **Python 3**.
 2. Run the interpreter demo on the boot example:
 
-```bash
-python interpreter_example.py rules/examples/boot.trx
-```
+ ```bash
+ python -m trxcore.interpreter_example rules/examples/boot.trx
+ ```
 
 3. Modify an example file such as `hello_nova.trx` and run the script again to see the structure change.
+4. For more commands and API details, see `docs/user_guide.md` and `docs/api_reference.md`.
 
 ## ✦ Examples
 
@@ -79,7 +83,7 @@ It tries to be **a mirror for structure**.
 
 ## ✦ Benchmarks & Further Reading
 
-Run `python benchmark_extended.py` to time the parser and translator across all
+Run `python -m trxcore.benchmark_extended` to time the parser and translator across all
 example programs. A summary of the results appears in
 `docs/impact_report.md`.
 
@@ -91,5 +95,6 @@ It wants you to make it weirder.
 
 ### Author
 
-**Markus Machat** — 2025  
-MIT License.
+**Markus Machat** — 2025
+
+This project is licensed under the [MIT License](LICENSE).

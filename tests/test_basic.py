@@ -1,6 +1,6 @@
 import unittest
-from parser import parse
-from translator import translate
+from trxcore.parser import parse
+from trxcore.translator import translate
 
 class TestParser(unittest.TestCase):
     def test_parse_hello(self):

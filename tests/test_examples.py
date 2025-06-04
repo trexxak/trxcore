@@ -1,6 +1,6 @@
 import unittest
-from parser import parse_file
-from translator import translate_file
+from trxcore.parser import parse_file
+from trxcore.translator import translate_file
 import os
 
 class TestAllExamples(unittest.TestCase):
