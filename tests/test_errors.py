@@ -1,5 +1,5 @@
 import unittest
-from parser import parse
+from trxcore.parser import parse
 
 class TestParserErrors(unittest.TestCase):
     def test_unmatched_closing(self):

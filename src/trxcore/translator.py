@@ -1,6 +1,6 @@
 """Simple translator from Trexxak source to an English-like summary."""
 from typing import List, Union
-from parser import parse
+from .parser import parse
 
 Tree = List[Union[str, list]]
 
