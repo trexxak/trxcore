@@ -1,5 +1,8 @@
 # Trexxak
 
+[![CI](https://github.com/trexxak/trxcore/actions/workflows/ci.yml/badge.svg)](https://github.com/trexxak/trxcore/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 > A symbolic grammar of truth, intent, and transformation.
 
 Trexxak is a minimalist symbolic language — not for machines, but for **minds**.
@@ -92,5 +95,6 @@ It wants you to make it weirder.
 
 ### Author
 
-**Markus Machat** — 2025  
-MIT License.
+**Markus Machat** — 2025
+
+This project is licensed under the [MIT License](LICENSE).
