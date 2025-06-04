@@ -1,5 +1,5 @@
 import unittest
-from translator import english_to_trexxak, translate, english_to_html, html_to_english
+from trxcore.translator import english_to_trexxak, translate, english_to_html, html_to_english
 
 class TestDualTranslation(unittest.TestCase):
     def test_trexxak_roundtrip(self):

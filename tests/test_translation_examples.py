@@ -1,5 +1,5 @@
 import unittest
-from translator import translate_file
+from trxcore.translator import translate_file
 
 
 class TestTranslationExamples(unittest.TestCase):
