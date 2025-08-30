@@ -13,3 +13,6 @@ license = {file = "LICENSE"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[project.scripts]
+trexx = "trxcore.cli:main"

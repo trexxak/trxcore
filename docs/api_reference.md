@@ -26,3 +26,22 @@ Wraps each line of text in `<p>` tags.
 
 ### `html_to_english(text: str) -> str`
 Removes HTML tags, returning plain text.
+
+## `runtime`
+
+### `Runtime`
+Minimal executor for a practical subset of Trexxak. Supports variables, simple
+calls, streaming over comma-separated values, basic conditionals, and a small
+set of built-in functions. Extend via `registry.register("name")`.
+
+### `run_file(path: str, strict: bool = False)`
+Convenience function to execute a `.trx` file.
+
+## CLI `trexx`
+
+Install the package and use the console script:
+- `trexx parse FILE.trx [--json] [--strict]`
+- `trexx translate FILE.trx`
+- `trexx validate FILE.trx`
+- `trexx run FILE.trx [-D name=value] [--strict]`
+- `trexx bench`

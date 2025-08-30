@@ -1,0 +1,2 @@
+[console_scripts]
+trexx = trxcore.cli:main

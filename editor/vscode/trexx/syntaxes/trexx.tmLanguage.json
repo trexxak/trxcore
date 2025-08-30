@@ -1,0 +1,104 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Trexxak",
+  "scopeName": "source.trexx",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#numbers" },
+    { "include": "#variables" },
+    { "include": "#constants" },
+    { "include": "#tokens" },
+    { "include": "#operators" },
+    { "include": "#functionCall" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.trexx",
+          "match": "//.*$"
+        },
+        {
+          "name": "comment.block.trexx",
+          "begin": "#comment\\|",
+          "end": "_\\|[!?]?",
+          "patterns": [
+            { "include": "#comments" }
+          ]
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.trexx",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            { "name": "constant.character.escape.trexx", "match": "\\\\." }
+          ]
+        },
+        {
+          "name": "string.quoted.single.trexx",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            { "name": "constant.character.escape.trexx", "match": "\\\\." }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.trexx",
+          "match": "\\b\\d+(?:\\.\\d+)?(?:ms|s)?\\b"
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        { "name": "variable.other.trexx", "match": "#[_A-Za-z][_A-Za-z0-9]*" },
+        { "name": "variable.parameter.trexx", "match": "@[_A-Za-z][_A-Za-z0-9]*" }
+      ]
+    },
+    "constants": {
+      "patterns": [
+        {
+          "name": "constant.language.trexx",
+          "match": "\\^[A-Z][A-Z0-9_]*"
+        }
+      ]
+    },
+    "tokens": {
+      "patterns": [
+        { "name": "punctuation.section.block.end.trexx", "match": "_\\|[!?]?" },
+        { "name": "keyword.control.trexx", "match": "-\\?!\\|" },
+        { "name": "keyword.control.trexx", "match": "-!?\\|" },
+        { "name": "keyword.control.trexx", "match": "\\?!\\|" },
+        { "name": "keyword.control.trexx", "match": "!?\\|" },
+        { "name": "keyword.control.trexx", "match": "\\?\\|" },
+        { "name": "punctuation.section.block.begin.trexx", "match": "(?<!\\\\)\\|" }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        { "name": "keyword.operator.logical.trexx", "match": "[\/&]" },
+        { "name": "keyword.operator.modifier.trexx", "match": "\\+\\*|-\\*" },
+        { "name": "keyword.operator.binding.trexx", "match": "[:;,]" }
+      ]
+    },
+    "functionCall": {
+      "patterns": [
+        {
+          "name": "meta.function.call.trexx",
+          "match": "!\\|\\s*([A-Za-z_][A-Za-z0-9_-]*)",
+          "captures": {
+            "1": { "name": "support.function.trexx" }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "trexx",
+  "displayName": "Trexxak",
+  "description": "Syntax highlighting for Trexxak (.trx)",
+  "version": "0.0.1",
+  "publisher": "local",
+  "engines": { "vscode": "^1.70.0" },
+  "categories": ["Programming Languages"],
+  "keywords": ["trexxak", "trexx", "trx", "symbolic", "language"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trexxak/trxcore"
+  },
+  "license": "MIT",
+  "contributes": {
+    "languages": [
+      {
+        "id": "trexx",
+        "aliases": ["Trexxak", "Trexx", "trexxak", "trexx"],
+        "extensions": [".trx"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "trexx",
+        "scopeName": "source.trexx",
+        "path": "./syntaxes/trexx.tmLanguage.json"
+      }
+    ],
+    "iconThemes": [
+      {
+        "id": "trexx-icons",
+        "label": "Trexx Icons",
+        "path": "./icons/trexx-icon-theme.json"
+      }
+    ]
+  },
+  "icon": "icons/trexx-extension-icon.png"
+}

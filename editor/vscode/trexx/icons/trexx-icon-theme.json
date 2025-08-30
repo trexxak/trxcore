@@ -1,0 +1,10 @@
+{
+  "iconDefinitions": {
+    "trxFile": {
+      "iconPath": "./trx-file.svg"
+    }
+  },
+  "fileExtensions": {
+    "trx": "trxFile"
+  }
+}

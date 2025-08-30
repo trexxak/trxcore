@@ -1,5 +1,6 @@
 """Minimal Trexxak parser returning a nested list representation."""
 
+
 def parse(text: str, *, strict: bool = False):
     """Parse Trexxak source into a nested list.
 
@@ -40,8 +41,21 @@ def parse(text: str, *, strict: bool = False):
             stack.append(node[1])
             i += 2
         elif text[i] == '|' and (i == 0 or text[i-1] != '\\'):
-            token = buf.strip() + '|' if buf.strip() else '|'
+            # split buffer at last newline so that leading content (e.g. call expr)
+            # becomes a separate text node and the suffix becomes the token prefix
+            token_prefix = ""
+            if "\n" in buf:
+                pre, last = buf.rsplit("\n", 1)
+                if pre.strip():
+                    stack[-1].append(pre.strip())
+                token_prefix = last.strip()
+            else:
+                token_prefix = buf.strip()
             buf = ""
+            # Fix common mojibake where UTF-8 '§' becomes 'Â§' under cp1252
+            if token_prefix.startswith('\u00C2\u00A7'):
+                token_prefix = '\u00A7' + token_prefix[2:]
+            token = (token_prefix + '|') if token_prefix else '|'
             node = [token, []]
             stack[-1].append(node)
             stack.append(node[1])
@@ -83,7 +97,10 @@ def parse(text: str, *, strict: bool = False):
         raise ValueError("Unclosed block")
     return root
 
+
 def parse_file(path: str, *, strict: bool = False):
     """Parse a Trexxak file from ``path`` and return its tree."""
-    with open(path, 'r') as f:
+    with open(path, 'r', encoding='utf-8') as f:
         return parse(f.read(), strict=strict)
+
+

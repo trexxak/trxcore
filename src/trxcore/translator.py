@@ -43,6 +43,15 @@ def _to_lines(tree: Tree, indent: int = 0) -> List[str]:
                     value = _to_plain(value_node) if value_node else ""
                 lines.append("  " * indent + f"const {name} = {value}")
                 lines.extend(_to_lines(children[1:], indent + 1))
+            elif token.startswith('^') and token.endswith('|'):
+                name = token[1:-1]
+                value_node = children[0] if children else ""
+                if isinstance(value_node, list) and value_node[0] == '!|':
+                    value = _to_lines([value_node])[0]
+                else:
+                    value = _to_plain(value_node) if value_node else ""
+                lines.append("  " * indent + f"const {name} = {value}")
+                lines.extend(_to_lines(children[1:], indent + 1))
             elif token == '!|':
                 value = _to_plain(children[0]) if children else ""
                 lines.append("  " * indent + f"call {value}")
