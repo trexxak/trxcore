@@ -1,12 +1,29 @@
+import os
+from pathlib import Path
 import subprocess
 import sys
 import unittest
 
 
 class TestCliContract(unittest.TestCase):
+    REPO_ROOT = Path(__file__).resolve().parents[1]
+    SRC_DIR = REPO_ROOT / "src"
+
     def run_cli(self, *args):
         cmd = [sys.executable, "-m", "trxcore.cli", *args]
-        return subprocess.run(cmd, capture_output=True, text=True)
+        env = os.environ.copy()
+        existing = env.get("PYTHONPATH")
+        if existing:
+            env["PYTHONPATH"] = os.pathsep.join((str(self.SRC_DIR), existing))
+        else:
+            env["PYTHONPATH"] = str(self.SRC_DIR)
+        return subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            cwd=str(self.REPO_ROOT),
+            env=env,
+        )
 
     def test_validate_is_strict(self):
         proc = self.run_cli("validate", "rules/examples/hello_nova.trx")
