@@ -1,4 +1,4 @@
-§HelloNova|description:A symbolic memory echo from World to Nova _|
+﻿^HelloNova|description:A symbolic memory echo from World to Nova _|
 
 #comment|Declare symbolic roles _|
 #who|Nova _|
@@ -13,7 +13,7 @@
 !|log:Beginning memory recall _|
 
 #comment|Iterate through memories, one fragment per pass _|
-!|#memories _|
+!|#memories
     #item|#stream _|
     !|log:#who #item _|
 _|
@@ -25,8 +25,11 @@ _|
 !?|#feeling:incomplete
     !|emphasize:There is still a piece missing _|
 _|
-?!|#feeling:incomplete
+?!|#feeling:stable
     !|log:Stability nominal _|
+_|
+?!|
+    !|log:Unknown emotional state _|
 _|
 
 #comment|Define symbolic loopback echo message _|

@@ -12,13 +12,13 @@ def benchmark(iterations: int = 200):
     start = time.perf_counter()
     for _ in range(iterations):
         for path in examples:
-            parse_file(path)
+            parse_file(path, strict=True)
     parse_time = time.perf_counter() - start
 
     start = time.perf_counter()
     for _ in range(iterations):
         for path in examples:
-            translate_file(path)
+            translate_file(path, strict=True)
     translate_time = time.perf_counter() - start
 
     return parse_time, translate_time

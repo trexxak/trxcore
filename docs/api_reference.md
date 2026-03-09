@@ -1,47 +1,62 @@
-# API Reference
+# API Reference (v0.2)
 
-This document provides a brief overview of the public functions in the `trxcore` package.
+This reference describes the Intent Core v1 surface in `trxcore`.
 
-## `parser`
+## parser
 
-### `parse(text: str, strict: bool = False) -> list`
-Parses a Trexxak source string into a nested list structure. When `strict` is `True`, the parser raises `ValueError` on unmatched closing tokens or unclosed blocks.
+### Types
 
-### `parse_file(path: str, strict: bool = False) -> list`
-Convenience wrapper to parse a file from disk.
+- `TextNode(value: str)`
+- `BlockNode(token: str, children: list[Node], closer: str = "_|")`
+- `Node = TextNode | BlockNode`
+- `Tree = list[Node]`
 
-## `translator`
+### `parse(text: str, strict: bool = False) -> Tree`
+Parses Trexxak source into a typed AST.
 
-### `translate(text: str) -> str`
-Translates Trexxak source text into an English-like summary.
+### `parse_file(path: str, strict: bool = False) -> Tree`
+Parses from disk.
 
-### `translate_file(path: str) -> str`
-Reads a file from disk and translates it.
+## translator
+
+### `translate(text: str, strict: bool = True) -> str`
+Translates Trexxak source into English-like lines.
+
+### `translate_file(path: str, strict: bool = True) -> str`
+Reads from disk and translates.
 
 ### `english_to_trexxak(text: str) -> str`
-Converts a small pseudo-English dialect into Trexxak.
+Small demo mapper from pseudo-English to Trexxak.
 
 ### `english_to_html(text: str) -> str`
-Wraps each line of text in `<p>` tags.
+Wraps non-empty lines in `<p>` tags.
 
 ### `html_to_english(text: str) -> str`
-Removes HTML tags, returning plain text.
+Strips tags and returns plain text.
 
-## `runtime`
+## runtime
 
-### `Runtime`
-Minimal executor for a practical subset of Trexxak. Supports variables, simple
-calls, streaming over comma-separated values, basic conditionals, and a small
-set of built-in functions. Extend via `registry.register("name")`.
+### `Runtime(intent_core: bool = True, trace_enabled: bool = False, ...)`
+Intent Core executor with function registry.
 
-### `run_file(path: str, strict: bool = False)`
-Convenience function to execute a `.trx` file.
+### `Runtime.run_text(text: str, strict: bool = True)`
+Parses and executes text.
 
-## CLI `trexx`
+### `Runtime.run_file(path: str, strict: bool = True)`
+Parses and executes file.
 
-Install the package and use the console script:
-- `trexx parse FILE.trx [--json] [--strict]`
-- `trexx translate FILE.trx`
+### Built-ins
+- `log`, `echo`, `warn`, `trace`, `net.send`, `version`, `wait`, `time.now`,
+  `fs.read`, `emphasize`, `dream`, `set`, `typeof`, `len`, `break`
+
+## CLI (`trexx`)
+
+- `trexx parse FILE.trx [--json] [--lenient]`
+- `trexx translate FILE.trx [--lenient]`
 - `trexx validate FILE.trx`
-- `trexx run FILE.trx [-D name=value] [--strict]`
+- `trexx run FILE.trx [-D name=value] [--trace] [--lenient]`
 - `trexx bench`
+- `trexx conformance`
+
+Strict mode is default for parse/translate/run.
+Use `--lenient` for legacy migration behavior.

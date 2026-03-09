@@ -1,7 +1,14 @@
+﻿^AsyncReactive|description:Intent Core condition flow without legacy modal closers _|
+
 #event|startup _|
-|_ #event:startup _|?
-!|log:System has started _|
+!?|#event:startup
+    !|log:System has started _|
+_|
 
 #state|offline _|
-|_ #state:online _|!
-!|log:Will wait for connection or react when available _|
+!?|#state:online
+    !|log:Connected _|
+_|
+?!|
+    !|log:Will wait for connection _|
+_|

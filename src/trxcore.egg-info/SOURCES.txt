@@ -4,6 +4,7 @@ pyproject.toml
 src/trxcore/__init__.py
 src/trxcore/benchmark_extended.py
 src/trxcore/cli.py
+src/trxcore/conformance.py
 src/trxcore/interpreter_example.py
 src/trxcore/parser.py
 src/trxcore/runtime.py
@@ -14,9 +15,13 @@ src/trxcore.egg-info/dependency_links.txt
 src/trxcore.egg-info/entry_points.txt
 src/trxcore.egg-info/top_level.txt
 tests/test_basic.py
+tests/test_cli_contract.py
 tests/test_compare.py
+tests/test_conformance.py
+tests/test_docs_snippets.py
 tests/test_dual_translation.py
 tests/test_errors.py
 tests/test_examples.py
+tests/test_flagship_demos.py
 tests/test_runtime.py
 tests/test_translation_examples.py

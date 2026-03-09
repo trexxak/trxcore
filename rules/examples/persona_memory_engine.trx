@@ -1,0 +1,19 @@
+﻿^PersonaMemoryEngine|description:Symbolic memory persona engine with inspectable recall _|
+
+#persona|Nova _|
+#memories|first_signal,shared_mission,late_return _|
+#mood|reflective _|
+
+!|log:Memory scan for #persona _|
+!|#memories
+    #memory|#stream _|
+    !|trace:recall @loop.count #memory _|
+    !|log:#persona remembers #memory _|
+_|
+
+!?|#mood:reflective
+    !|log:#persona chooses a careful response _|
+_|
+?!|
+    !|log:#persona replies directly _|
+_|

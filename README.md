@@ -1,148 +1,126 @@
-# Trexxak
+# Trexxak / trxcore
 
 [![CI](https://github.com/trexxak/trxcore/actions/workflows/ci.yml/badge.svg)](https://github.com/trexxak/trxcore/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> A symbolic grammar of truth, intent, and transformation.
+Trexxak is an **Intent Language** between natural language and executable systems.
 
-Trexxak is a minimalist symbolic language — not for machines, but for **minds**.
+It is designed for AI-native agent behavior scripting where you need:
+- compact symbolic authoring,
+- deterministic execution,
+- and human-legible translation for review.
 
-It replaces verbose syntax, quoting, and escape characters with a **structural grammar** rooted in human cognition. It doesn't model natural language. It models **symbolic thought**.
+Trexxak is not positioned as a general-purpose language, a typed config system,
+or an enterprise orchestration platform.
 
-## ✦ What does Trexxak do?
+## Intent Core v1
 
-Trexxak lets you:
+`trxcore` now ships with **Intent Core v1**, a strict executable subset.
 
-- Declare variables and constants without ceremony
-- Compose actions and logic using structural forms, not keywords
-- Model identity, iteration, time, and conditionals with pure symbolic flow
-- Write code that *feels like thought*
+Supported constructs:
+- Variable declaration: `#name|value _|`
+- Constant declaration: `^Name|value _|` (and `\u00A7Name|value _|`)
+- Invocation: `!|fn:arg1,arg2 _|`
+- Streaming: `!|#list ... _|` and `!|@list ... _|`
+- Condition chains: `!?|`, `?!|`, `-!?|`, `-?!|`
 
-No brackets. No `if`. No `for`. No quotes unless you really want them.
+Legacy modal closers (`_|!`, `_|?`) are parseable but rejected in strict Intent Core runtime.
+Use `--lenient` only for legacy experimentation.
 
-Just this:
+Read the formal profile: `docs/trx_intent_core_v1.md`.
 
-```trexxak
-#name|Nova _|
-!|log:Hello #name _|
-```
+## Why Trexxak
 
-## ✦ Core Files
+Trexxak's v0.2 wedge is **agent behavior scripting** for builders who want symbolic control and inspectable intent.
 
-| File | Description |
-|------|-------------|
-| `manifest.trx` | Symbol and version declaration |
-| `rules_current.trx` | Canonical grammar rules |
-| `prelude.trx` | Core symbolic functions |
-| `boot.trx` | Minimal startup expression |
-| `hello_nova.trx` | Introduction via narrative stream |
-| `state_machine.trx` | Example of symbolic branching |
-| `network_chat.trx` | Example of networked messaging |
-| `grammar.md` | Formal syntax specification |
-| `guide.md` | Human-readable intro & tutorial |
-| `bizarro.md` | Speculative syntax — symbolic side-channel |
+Compared with similar DSL families:
+- Prompt/template DSLs: Trexxak adds explicit control-flow and symbol identity.
+- Workflow graph DSLs: Trexxak favors compact hand-authored scripts and quick intent review.
+- Typed config DSLs: Trexxak focuses on runnable behavioral semantics rather than static configuration proofs.
 
-## ✦ Quick Start
+Detailed positioning: `docs/why_trexxak.md`.
 
-1. Install **Python 3**.
-2. Run the interpreter demo on the boot example:
+## Quick Start
 
- ```bash
- python -m trxcore.interpreter_example rules/examples/boot.trx
- ```
-
-3. Modify an example file such as `hello_nova.trx` and run the script again to see the structure change.
-4. For more commands and API details, see `docs/user_guide.md` and `docs/api_reference.md`.
-
-### CLI (trexx)
-
-Install locally and try the CLI:
+1. Install Python 3.8+.
+2. Install locally:
 
 ```bash
 pip install -e .
-
-# Translate to English-like text
-trexx translate rules/examples/hello_nova.trx
-
-# Execute with the minimal runtime (prints logs)
-trexx run rules/examples/hello_nova.trx
-
-# Seed variables on run
-trexx run rules/examples/hello_nova.trx -D who=Nova -D state=active
-
-# Validate structure strictly
-trexx validate rules/examples/boot.trx
-
-# Inspect parse tree as JSON
-trexx parse rules/examples/boot.trx --json
 ```
 
-Built-ins available in the minimal runtime:
-- log: prints message parts
-- warn: prints with WARNING prefix
-- version: prints package version
-- wait: sleeps for durations like 100ms, 1.5s, or 0.1
-- set: set a variable at runtime (set:name,value)
-- typeof: prints a best-effort type (list/str/none)
-- len: prints length of a value (or `#var`)
+3. Validate and run a flagship demo in strict mode (default):
 
-### Editor Support
-
-- VS Code syntax highlighting is included under `editor/vscode/trexx`.
-  Use “Developer: Install Extension from Location…” to load it locally.
-- Workspace tasks under `.vscode/tasks.json` provide:
-  - Trexx: Translate Current
-  - Trexx: Run Current
-
-### Encoding & ASCII Aliases
-
-If your environment shows garbled non-ASCII markers in docs/examples,
-use the ASCII constant alias described in `docs/compat.md`:
-
-- Constant: `^NAME|value _|`
-- Variable: `#name|value _|`
-
-## ✦ Examples
-
-Trexxak is self-explanatory if you let it be:
-
-```trexxak
-#state|active _|
-
-!?|#state:active
-    !|log:Running _|
-_|
+```bash
+trexx validate rules/examples/agent_debate_conductor.trx
+trexx run rules/examples/agent_debate_conductor.trx
 ```
 
-See `rules/examples/network_chat.trx` for a simple networked messaging scenario.
+4. Inspect parse tree and translation:
 
-## ✦ Philosophy
+```bash
+trexx parse rules/examples/agent_debate_conductor.trx --json
+trexx translate rules/examples/agent_debate_conductor.trx
+```
 
-Trexxak believes:
+5. Use trace lines for inspectable execution:
 
-- Escape is weakness.
-- Scope is strength.
-- Identity is shape, not type.
-- Every structure is iterable.
-- Commas only split if you let them.
+```bash
+trexx run rules/examples/research_scout.trx --trace
+```
 
-Trexxak doesn’t try to be a language.
-It tries to be **a mirror for structure**.
+## CLI
 
-## ✦ Benchmarks & Further Reading
+```bash
+trexx parse FILE.trx [--json] [--lenient]
+trexx translate FILE.trx [--lenient]
+trexx validate FILE.trx
+trexx run FILE.trx [-D name=value] [--trace] [--lenient]
+trexx bench
+```
 
-Run `python -m trxcore.benchmark_extended` to time the parser and translator across all
-example programs. A summary of the results appears in
-`docs/impact_report.md`.
+Strict behavior is the default contract. `--lenient` is explicit legacy mode.
 
-## ✦ Status
+## Flagship Demos
 
-Trexxak is a live experiment.  
-You are welcome to fork it, extend it, or break it.  
-It wants you to make it weirder.
+- `rules/examples/agent_debate_conductor.trx`
+- `rules/examples/persona_memory_engine.trx`
+- `rules/examples/research_scout.trx`
+
+These demos are release-gated by golden-output tests.
+
+## Conformance and Testing
+
+This repository now includes:
+- conformance pass/fail corpora in `rules/conformance/`,
+- strict parse checks for all examples,
+- runtime regression tests for condition chaining, stream break semantics,
+  and legacy modal token handling,
+- CLI contract tests for strict-by-default behavior.
+
+Run all tests:
+
+```bash
+python -m unittest discover -s tests -t .
+```
+
+Conformance details: `docs/conformance.md`.
+Translation guarantees and lossiness notes: `docs/translation_contract.md`.
+
+## Philosophy
+
+Trexxak keeps its philosophical origin: symbolic, compact, intent-first expression.
+
+v0.2 makes that philosophy operational by adding strict semantics,
+conformance evidence, and deterministic executable behavior.
+
+## Status
+
+Trexxak v0.2 is an evolving implementation of Intent Core v1.
+Feedback and extensions are welcome, especially around agent behavior design patterns.
 
 ### Author
 
-**Markus Machat** — 2025
+Markus Machat - 2025
 
-This project is licensed under the [MIT License](LICENSE).
+Licensed under MIT.

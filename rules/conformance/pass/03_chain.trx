@@ -1,0 +1,11 @@
+﻿^ConformanceChain|description:if elseif else _|
+#state|cold _|
+!?|#state:hot
+    !|log:hot _|
+_|
+?!|#state:cold
+    !|log:cold _|
+_|
+?!|
+    !|log:unknown _|
+_|

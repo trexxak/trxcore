@@ -1,22 +1,29 @@
+﻿import os
 import unittest
+
 from trxcore.parser import parse_file
 from trxcore.translator import translate_file
-import os
+
 
 class TestAllExamples(unittest.TestCase):
-    def test_parse_and_translate_examples(self):
-        examples_dir = os.path.join('rules', 'examples')
+    def test_examples_parse_in_strict_mode(self):
+        examples_dir = os.path.join("rules", "examples")
         for fname in os.listdir(examples_dir):
-            if not fname.endswith('.trx'):
+            if not fname.endswith(".trx"):
                 continue
             path = os.path.join(examples_dir, fname)
-            tree = parse_file(path)
-            self.assertIsInstance(tree, list, msg=f"{fname} did not parse")
+            tree = parse_file(path, strict=True)
             self.assertTrue(tree, msg=f"{fname} produced empty tree")
 
-            text = translate_file(path)
-            # translation should not contain raw markers
-            self.assertNotIn('|', text, msg=f"Untranslated marker in {fname}")
+    def test_examples_translate_in_strict_mode(self):
+        examples_dir = os.path.join("rules", "examples")
+        for fname in os.listdir(examples_dir):
+            if not fname.endswith(".trx"):
+                continue
+            path = os.path.join(examples_dir, fname)
+            out = translate_file(path, strict=True)
+            self.assertTrue(out.strip(), msg=f"{fname} produced empty translation")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

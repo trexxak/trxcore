@@ -1,43 +1,30 @@
-# Demonstrating Trexxak's Real Impact
+# Impact Report (v0.2)
 
-Skeptics dismissed Trexxak as a pet project. This short report presents hard
-numbers and additional experiments that show the language's potential.
+Trexxak v0.2 shifts from broad language rhetoric to an Intent Core profile with
+explicit semantics and conformance evidence.
 
-## Expanded Benchmarks
+## What Changed
 
-Running `benchmark_extended.py` parses and translates every example file 200
-times. On the reference machine it completes in under 3 seconds total:
+- Strict-by-default CLI contract for parse/translate/run.
+- Typed AST parser output without closure-marker leakage.
+- Conformance corpus with pass/fail/runtime-fail classes.
+- Golden-output flagship demos for agent behavior scripting.
 
-```
-$ python benchmark_extended.py
-Parsing 7 example files 200x: 1.2s
-Translating 7 example files 200x: 1.5s
-```
+## Practical Outcome
 
-These figures demonstrate that Trexxak's pure Python implementation scales
-beyond trivial examples while remaining responsive for interactive use.
+Trexxak now offers a clearer value proposition:
+- compact symbolic behavior authoring,
+- deterministic execution traces,
+- readable English projection for review.
 
-## Brainpower in the Examples
+This makes the project more defensible as an Intent Language layer for agent behavior
+workflows, while keeping philosophical and linguistic identity in supporting docs.
 
-The repository includes increasingly complex `.trx` programs:
+## Limits (Intentional)
 
-- **`state_machine.trx`** models symbolic states and transitions.
-- **`loops.trx`** showcases stream iteration with conditional breaks.
-- **`network_chat.trx`** demonstrates message passing between symbolic agents.
+v0.2 does not aim to replace:
+- production orchestration systems,
+- typed config theorem-style tooling,
+- full general-purpose programming environments.
 
-Each file parses cleanly and the translator yields human‑readable summaries,
-proving that Trexxak can capture higher‑level intent with minimal syntax.
-
-## A Heart for Collaboration
-
-Trexxak is designed so that humans and LLMs can exchange structured
-instructions. The translator converts symbolic tokens into clear English lines,
-making it easy for non‑experts to inspect or refine the generated plans.
-Round‑trip tests show that information survives the translation process, just
-like with simple HTML pipelines.
-
-## Conclusion
-
-Numbers alone do not measure enthusiasm, but the new benchmarks and
-example-driven workflow show that Trexxak offers a genuine path toward a light
-symbolic interface between people and machines.
+These boundaries are explicit in `docs/why_trexxak.md`.

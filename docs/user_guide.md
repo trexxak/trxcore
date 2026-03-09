@@ -1,20 +1,51 @@
-# User Guide
+# User Guide (v0.2)
 
-This short guide shows how to run the sample interpreter and translate Trexxak code.
+This guide shows the Intent Core workflow for Trexxak.
 
-## Running the Interpreter
+## 1) Install
 
+```bash
+pip install -e .
 ```
-python -m trxcore.interpreter_example rules/examples/boot.trx
+
+## 2) Validate and Run a Demo
+
+```bash
+trexx validate rules/examples/agent_debate_conductor.trx
+trexx run rules/examples/agent_debate_conductor.trx
 ```
 
-Modify any `.trx` file in `rules/examples` and re-run the command to experiment with the syntax.
+## 3) Inspect Structure and Translation
 
-## Translating to English
+```bash
+trexx parse rules/examples/agent_debate_conductor.trx --json
+trexx translate rules/examples/agent_debate_conductor.trx
+```
 
+## 4) Run with Runtime Trace
+
+```bash
+trexx run rules/examples/research_scout.trx --trace
 ```
-python - <<'PY'
-from trxcore.translator import translate_file
-print(translate_file('rules/examples/hello_nova.trx'))
-PY
+
+## 5) Legacy Migration Mode
+
+Strict mode is default.
+Use lenient mode only for legacy syntax migration:
+
+```bash
+trexx parse legacy.trx --lenient
+trexx run legacy.trx --lenient
 ```
+
+## 6) Run the Full Test and Conformance Gates
+
+```bash
+python -m unittest discover -s tests -t .
+```
+
+See also:
+- `docs/trx_intent_core_v1.md`
+- `docs/translation_contract.md`
+- `docs/conformance.md`
+- `docs/why_trexxak.md`

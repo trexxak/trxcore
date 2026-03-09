@@ -1,4 +1,4 @@
-§Boot|description:Startup_sequence_for_a_Trexxak_program _|
+﻿^Boot|description:Startup_sequence_for_a_Trexxak_program _|
 
 #msg|Trexxak boot sequence initiated _|
 !|log:#msg _|
@@ -8,5 +8,3 @@
 
 #state|booted _|
 !|log:System state set to:#state _|
-
-

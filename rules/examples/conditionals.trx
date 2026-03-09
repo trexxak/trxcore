@@ -1,29 +1,27 @@
-!?|condition1
+﻿^Conditionals|description:Intent Core conditional chaining examples _|
+
+#mode|branch2 _|
+
+!?|#mode:branch1
     !|log:Branch 1 _|
 _|
-
-!?|condition2
+?!|#mode:branch2
     !|log:Branch 2 _|
 _|
-
-?!|condition3
-    !|log:Branch 3 (only if previous failed) _|
+?!|#mode:branch3
+    !|log:Branch 3 _|
 _|
-
 ?!|
     !|log:Final fallback _|
 _|
 
-comment|inversed _|
-
--!?|state:offline
+#state|offline _|
+-!?|#state:online
     !|log:System is online _|
 _|
-
--?!|state:sleep
+-?!|#state:sleep
     !|log:Still running _|
 _|
-
 -?!|
     !|log:System unresponsive _|
 _|

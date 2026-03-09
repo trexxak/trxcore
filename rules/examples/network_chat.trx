@@ -1,11 +1,14 @@
-§NetworkChat|description:Symbolic network messaging demo _|
+﻿^NetworkChat|description:Intent Core network messaging demo _|
 
 #target|Luna _|
 #message|Hello from Nova _|
+#incoming|Acknowledged _|
 
 !|net.send:#target,#message _|
 
-|_ net.receive:#target _|?
-    #incoming|#stream _|
+!?|#incoming:Acknowledged
     !|log:Received #incoming from #target _|
+_|
+?!|
+    !|warn:No response from #target _|
 _|

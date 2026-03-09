@@ -1,11 +1,13 @@
-import unittest
-from trxcore.translator import english_to_trexxak, translate, english_to_html, html_to_english
+﻿import unittest
+
+from trxcore.translator import english_to_trexxak, english_to_html, html_to_english, translate
+
 
 class TestDualTranslation(unittest.TestCase):
     def test_trexxak_roundtrip(self):
         english = "set who = Nova\ncall log:Hello"
         trx = english_to_trexxak(english)
-        back = translate(trx)
+        back = translate(trx, strict=True)
         self.assertIn("set who = Nova", back)
         self.assertIn("call log:Hello", back)
 
@@ -15,5 +17,6 @@ class TestDualTranslation(unittest.TestCase):
         back = html_to_english(html)
         self.assertEqual(back.replace("\n", ""), "HelloWorld")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

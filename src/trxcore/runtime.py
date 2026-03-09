@@ -1,18 +1,16 @@
-"""Minimal runtime for executing Trexxak intent blocks.
+﻿"""Minimal runtime for executing Trexxak intent blocks.
 
-This is a pragmatic, safe-by-default interpreter that understands a
-small, useful subset of Trexxak so example files can "do something".
-
-Supported semantics (initial cut):
+Intent Core v1 focuses on a small, deterministic subset:
 - Variable declarations: `#name|value _|`
-- Simple calls: `!|log:message _|` with `#var` substitution
-- Streaming: `!|#list _|` iterates comma-separated values; exposes `#stream`
-- Call aliasing: `#alias|!|log:... _| _|` then `!|#alias _|`
-- Basic conditionals: `!?|#var:value ... _|` and `?!|#var:value ... _|`
+- Constant declarations: `^Name|value _|` or `\u00A7Name|value _|`
+- Calls: `!|fn:arg1,arg2 _|`
+- Streaming: `!|#list ... _|` and `!|@list ... _|`
+- Conditionals: `!?|...`, `?!|...`, `-!?|...`, `-?!|...`
 
-This is intentionally small and predictable; it can be extended via the
-function registry.
+Legacy modal block closers (`_|!`, `_|?`) are parseable but not executable in
+Intent Core mode. Run with `intent_core=False` to evaluate them leniently.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -20,16 +18,11 @@ import re
 import sys
 import time
 from datetime import datetime, timezone
-from typing import Callable, Dict, List, Tuple, Union, Any
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
-from .parser import parse
 from . import __version__
+from .parser import BlockNode, Node, TextNode, Tree, parse
 
-Tree = List[Union[str, list]]
-Node = Union[str, list]
-
-
-# --- Function registry -----------------------------------------------------
 
 class Registry:
     def __init__(self):
@@ -39,9 +32,10 @@ class Registry:
         def deco(fn: Callable[..., Any]):
             self._funcs[name] = fn
             return fn
+
         return deco
 
-    def get(self, name: str) -> Callable[..., Any] | None:
+    def get(self, name: str) -> Optional[Callable[..., Any]]:
         return self._funcs.get(name)
 
     def as_dict(self) -> Dict[str, Callable[..., Any]]:
@@ -64,6 +58,11 @@ def _fn_echo(ctx: "Runtime", *args: str):
 @registry.register("warn")
 def _fn_warn(ctx: "Runtime", *args: str):
     ctx.write("WARNING: " + " ".join(args))
+
+
+@registry.register("trace")
+def _fn_trace(ctx: "Runtime", *args: str):
+    ctx.write("TRACE: " + " ".join(args))
 
 
 @registry.register("net.send")
@@ -131,16 +130,11 @@ def _fn_set(ctx: "Runtime", name: str = "", value: str = ""):
 
 @registry.register("typeof")
 def _fn_typeof(ctx: "Runtime", value: str = ""):
-    # best-effort typing for demo
     if value.startswith("#"):
         v = ctx.vars.get(value[1:], None)
     else:
         v = value
-    t = (
-        "list" if isinstance(v, list) else
-        "none" if v is None else
-        "str"
-    )
+    t = "list" if isinstance(v, list) else "none" if v is None else "str"
     ctx.write(t)
 
 
@@ -157,31 +151,56 @@ def _fn_len(ctx: "Runtime", value: str = ""):
     ctx.write(str(n))
 
 
-# --- Runtime ---------------------------------------------------------------
+@registry.register("break")
+def _fn_break(ctx: "Runtime"):
+    if not ctx._loop_stack:
+        ctx.write("WARNING: break called outside stream")
+        return
+    ctx._loop_stack[-1]["break"] = True
 
 
-def _to_plain(node: Node) -> str:
-    """Flatten a node to a simple string."""
-    if isinstance(node, str):
-        # skip closing markers
-        if node in ("_|", "_|!", "_|?"):
-            return ""
-        return node.strip().lstrip("_").rstrip("|").strip()
-    token, children = node
-    if token == "!|":
-        inner = " ".join(filter(None, (_to_plain(c) for c in children)))
-        return inner.strip()
-    inner = " ".join(filter(None, (_to_plain(c) for c in children)))
-    clean = token.strip().lstrip("_").rstrip("|").strip()
-    return f"{clean} {inner}".strip()
-
+CONST_MARKER = "\u00A7"
+MOJIBAKE_CONST_MARKER = "\u00C2\u00A7"
 
 _re_var = re.compile(r"#([A-Za-z_][A-Za-z0-9_]*)")
 _re_ptr = re.compile(r"@(#?[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)?)")
 
 
-def _subst(s: str, vars_: Dict[str, Any], *, loop_count: int | None = None) -> str:
+def _clean_text(value: str) -> str:
+    return value.strip().lstrip("_").rstrip("|").strip()
+
+
+def _is_const_token(token: str) -> bool:
+    return token.endswith("|") and (
+        token.startswith("^")
+        or token.startswith(CONST_MARKER)
+        or token.startswith(MOJIBAKE_CONST_MARKER)
+    )
+
+
+def _decl_name(token: str) -> str:
+    body = token[:-1] if token.endswith("|") else token
+    if body.startswith(MOJIBAKE_CONST_MARKER):
+        return body[2:]
+    return body[1:]
+
+
+def _to_plain(node: Node) -> str:
+    if isinstance(node, TextNode):
+        return _clean_text(node.value)
+
+    if node.token == "!|":
+        inner = " ".join(filter(None, (_to_plain(c) for c in node.children)))
+        return inner.strip()
+
+    inner = " ".join(filter(None, (_to_plain(c) for c in node.children)))
+    clean = _clean_text(node.token)
+    return f"{clean} {inner}".strip()
+
+
+def _subst(s: str, vars_: Dict[str, Any], *, loop_count: Optional[int] = None) -> str:
     """Replace `@pointers` and `#vars` with values (stringified)."""
+
     def repl_ptr(m: re.Match[str]) -> str:
         key = m.group(1)
         if key == "now":
@@ -208,8 +227,7 @@ def _subst(s: str, vars_: Dict[str, Any], *, loop_count: int | None = None) -> s
 
 
 def _split_csv(value: str) -> List[str]:
-    # naive CSV splitter on commas; trims whitespace
-    return [part.strip() for part in value.split(",")]
+    return [part.strip() for part in value.split(",") if part.strip()]
 
 
 def _parse_call(expr: str) -> Tuple[str, List[str]]:
@@ -222,15 +240,12 @@ def _parse_call(expr: str) -> Tuple[str, List[str]]:
 
 
 def _eval_condition(expr: str, token: str, vars_: Dict[str, Any]) -> bool:
-    """Very small condition evaluator supporting `#x:value`, `/` (OR), and `&` (AND).
-
-    Inversion is handled via the token (`-!?|`, `-?!|`).
-    """
+    """Evaluate `#x:value`, OR `/`, AND `&`, and polarity markers `+*`/`-*`."""
     expr = expr.strip()
     if not expr:
         result = True
     else:
-        # AND has higher precedence than OR in this tiny evaluator
+
         def term_ok(term: str) -> bool:
             term = term.strip()
             if ":" not in term:
@@ -238,7 +253,6 @@ def _eval_condition(expr: str, token: str, vars_: Dict[str, Any]) -> bool:
             left, right = term.split(":", 1)
             left = left.strip()
             right = right.strip()
-            # polarity markers: +* strengthen, -* negate
             negate_term = False
             if left.startswith("+*"):
                 left = left[2:].strip()
@@ -271,10 +285,12 @@ CALL_ALIAS_KEY = "__call_node__"
 
 @dataclass
 class Runtime:
-    functions: Dict[str, Callable[..., Any]] | None = None
+    functions: Optional[Dict[str, Callable[..., Any]]] = None
     stdout: Any = None
     stderr: Any = None
-    init_vars: Dict[str, Any] | None = None
+    init_vars: Optional[Dict[str, Any]] = None
+    intent_core: bool = True
+    trace_enabled: bool = False
 
     def __post_init__(self):
         if self.stdout is None:
@@ -291,121 +307,135 @@ class Runtime:
             self.vars.update(self.init_vars)
         self._loop_stack: List[Dict[str, Any]] = []
 
-    # public API -------------------------------------------------------------
-    def run_text(self, text: str, *, strict: bool = False):
+    def run_text(self, text: str, *, strict: bool = True):
         tree = parse(text, strict=strict)
         self._eval_nodes(tree)
 
-    def run_file(self, path: str, *, strict: bool = False):
+    def run_file(self, path: str, *, strict: bool = True):
         with open(path, "r", encoding="utf-8") as f:
             self.run_text(f.read(), strict=strict)
 
-    # helpers ----------------------------------------------------------------
     def write(self, msg: str):
         print(msg, file=self.stdout)
+
+    def _trace(self, msg: str):
+        if self.trace_enabled:
+            self.write(f"[trace] {msg}")
+
+    def _runtime_error(self, message: str):
+        raise ValueError(message)
+
+    def _loop_count(self) -> Optional[int]:
+        if not self._loop_stack:
+            return None
+        return int(self._loop_stack[-1].get("count", 0))
 
     def _eval_nodes(self, nodes: Tree):
         i = 0
         while i < len(nodes):
+            if self._loop_stack and self._loop_stack[-1].get("break"):
+                return
+
             node = nodes[i]
-            if isinstance(node, str):
-                # ignore loose strings/closers at top level
+            if isinstance(node, TextNode):
                 i += 1
                 continue
 
-            token, children = node
+            token = node.token
+            children = node.children
+            self._trace(f"token {token} closer {node.closer}")
 
-            # Conditional chain handling: if + elif* + else
             if token in ("!?|", "-!?|"):
-                chain: List[Tuple[str, List[Node]]] = [(token, children)]
+                chain: List[BlockNode] = [node]
                 j = i + 1
                 while j < len(nodes):
                     nxt = nodes[j]
-                    if isinstance(nxt, list) and nxt[0] in ("?!|", "-?!|"):
-                        chain.append((nxt[0], nxt[1]))
+                    if isinstance(nxt, BlockNode) and nxt.token in ("?!|", "-?!|"):
+                        chain.append(nxt)
                         j += 1
                         continue
                     break
 
                 matched = False
-                for ctok, cchildren in chain:
+                for branch in chain:
+                    cchildren = branch.children
                     cond_expr = _to_plain(cchildren[0]) if cchildren else ""
-                    # empty cond on ?!| means else
-                    is_else = ctok == "?!|" and not cond_expr
+                    is_else = branch.token == "?!|" and not cond_expr
                     if is_else:
                         if not matched:
                             self._eval_nodes(cchildren[1:])
                         matched = True
                         break
-                    if _eval_condition(cond_expr, ctok, self.vars):
+                    if _eval_condition(cond_expr, branch.token, self.vars):
                         self._eval_nodes(cchildren[1:])
                         matched = True
                         break
                 i = j
                 continue
 
-            # Variable declaration
             if token.startswith("#") and token.endswith("|"):
-                name = token[1:-1].strip()
+                name = _decl_name(token)
                 value: Any = ""
                 if children:
                     first = children[0]
-                    if isinstance(first, list) and first and first[0] == "!|":
-                        # call alias stored verbatim
+                    if isinstance(first, BlockNode) and first.token == "!|":
                         value = {CALL_ALIAS_KEY: first}
                     else:
-                        value = _subst(_to_plain(first), self.vars, loop_count=self._loop_stack[-1]["count"] if self._loop_stack else None)
+                        value = _subst(
+                            _to_plain(first),
+                            self.vars,
+                            loop_count=self._loop_count(),
+                        )
                         if "," in value:
                             value = _split_csv(value)
                 self.vars[name] = value
-                # nested content after value
                 self._eval_nodes(children[1:])
                 i += 1
                 continue
 
-            # Constant (best-effort: token starts with non-ASCII const marker)
-            if token.endswith("|") and not token[:1].isalnum() and not token.startswith(("#", "!", "?", "|", "_")):
-                name = token[1:-1].strip()
-                value = _subst(_to_plain(children[0]) if children else "", self.vars)
+            if _is_const_token(token):
+                name = _decl_name(token)
+                value = _subst(
+                    _to_plain(children[0]) if children else "",
+                    self.vars,
+                    loop_count=self._loop_count(),
+                )
                 self.consts[name] = value
                 self._eval_nodes(children[1:])
                 i += 1
                 continue
 
-            # Invocation
             if token == "!|":
                 call_expr = _to_plain(children[0]) if children else ""
-                # Variable-driven invocation
+
                 if call_expr.startswith("#") or call_expr.startswith("@"):
                     var_name = call_expr[1:].strip()
                     val = self.vars.get(var_name, None)
-                    # Alias to a call node
                     if isinstance(val, dict) and CALL_ALIAS_KEY in val:
                         self._eval_nodes([val[CALL_ALIAS_KEY]])
                     else:
-                        # Stream values
-                        items: List[str]
                         if isinstance(val, list):
                             items = [str(x) for x in val]
                         elif isinstance(val, str):
                             items = _split_csv(val) if "," in val else [val]
                         else:
                             items = []
-                        # push loop frame
-                        self._loop_stack.append({"count": 0})
+
+                        self._loop_stack.append({"count": 0, "break": False})
                         try:
                             for it in items:
                                 frame = self._loop_stack[-1]
                                 frame["count"] += 1
                                 self.vars["stream"] = it
                                 self._eval_nodes(children[1:])
+                                if frame.get("break"):
+                                    break
                         finally:
                             self._loop_stack.pop()
                     i += 1
                     continue
 
-                # Direct function call
-                expr = _subst(call_expr, self.vars, loop_count=self._loop_stack[-1]["count"] if self._loop_stack else None)
+                expr = _subst(call_expr, self.vars, loop_count=self._loop_count())
                 fn_name, args = _parse_call(expr)
                 fn = self.functions.get(fn_name)
                 if fn:
@@ -415,27 +445,48 @@ class Runtime:
                         print(f"Function '{fn_name}' error: {e}", file=self.stderr)
                 else:
                     print(f"Unknown function: {fn_name}", file=self.stderr)
-                # nested content after call
+
                 self._eval_nodes(children[1:])
                 i += 1
                 continue
 
-            # Generic/anonymous block or closers: descend
+            if token == "|":
+                if node.closer in ("_|!", "_|?") and self.intent_core:
+                    self._runtime_error(
+                        f"Unsupported legacy block modality in Intent Core v1: {node.closer}"
+                    )
+                self._eval_nodes(children)
+                i += 1
+                continue
+
+            if token == "?|" and self.intent_core:
+                self._runtime_error("Unsupported token in Intent Core v1: ?|")
+
+            if self.intent_core:
+                self._runtime_error(f"Unsupported token in Intent Core v1: {token}")
+
             self._eval_nodes(children)
             i += 1
 
 
-def run_text(text: str, *, strict: bool = False, **kwargs):
-    Runtime(**kwargs).run_text(text, strict=strict)
+def run_text(
+    text: str,
+    *,
+    strict: bool = True,
+    intent_core: bool = True,
+    **kwargs,
+):
+    Runtime(intent_core=intent_core, **kwargs).run_text(text, strict=strict)
 
 
-def run_file(path: str, *, strict: bool = False, **kwargs):
-    Runtime(**kwargs).run_file(path, strict=strict)
+def run_file(
+    path: str,
+    *,
+    strict: bool = True,
+    intent_core: bool = True,
+    **kwargs,
+):
+    Runtime(intent_core=intent_core, **kwargs).run_file(path, strict=strict)
 
 
-__all__ = [
-    "Runtime",
-    "registry",
-    "run_text",
-    "run_file",
-]
+__all__ = ["Runtime", "registry", "run_text", "run_file"]

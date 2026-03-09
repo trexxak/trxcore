@@ -1,4 +1,4 @@
-
+> Legacy Notice\n>\n> docs/grammar.md and docs/guide.md preserve Trexxak's broader research vision.\n> The strict executable contract for v0.2 is docs/trx_intent_core_v1.md.\n\n
 # Trexxak Guide (`guide.md`)
 
 **Language**: Trexxak  

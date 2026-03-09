@@ -1,0 +1,14 @@
+﻿^DebateConductor|description:Multi-agent debate conductor with explicit turn trace _|
+
+#topic|Should autonomy require memory transparency _|
+#agents|Nova,Luna,Orion _|
+
+!|log:Debate topic:#topic _|
+!|#agents
+    #agent|#stream _|
+    !|trace:turn @loop.count speaker #agent _|
+    !|log:#agent argues on #topic _|
+_|
+
+#winner|Luna _|
+!|log:Winner:#winner _|

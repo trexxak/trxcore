@@ -1,6 +1,4 @@
-§SymbolicLoops|
-description:Examples of symbolic iteration using `@` and correct triadic closure
-_|
+﻿^SymbolicLoops|description:Examples of symbolic iteration using @ and strict closures _|
 
 #comment|Basic list loop _|
 #loop_input|sun,moon,stars _|
@@ -23,6 +21,9 @@ _|
     #item|#stream _|
     !?|#item:STOP
         !|log:Halting loop at STOP _|
+        !|break _|
     _|
-    !|log:Processing #item _|
+    -!?|#item:STOP
+        !|log:Processing #item _|
+    _|
 _|

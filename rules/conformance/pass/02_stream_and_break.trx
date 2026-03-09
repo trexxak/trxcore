@@ -1,0 +1,9 @@
+﻿^ConformanceStream|description:stream with break _|
+#values|A,B,STOP,C _|
+!|@values
+    #v|#stream _|
+    !?|#v:STOP
+        !|break _|
+    _|
+    !|log:#v _|
+_|

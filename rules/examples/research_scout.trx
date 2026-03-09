@@ -1,0 +1,20 @@
+﻿^ResearchScout|description:Autonomous research scout with deterministic trace _|
+
+#query|safety constraints for open world agents _|
+#sources|arxiv,docs,benchmarks _|
+#status|running _|
+
+!|log:Scout query:#query _|
+!|#sources
+    #source|#stream _|
+    !|trace:probe @loop.count #source _|
+    !|log:Collected note from #source _|
+_|
+
+#status|complete _|
+!?|#status:complete
+    !|log:Scout finished with traceable steps _|
+_|
+?!|
+    !|warn:Scout incomplete _|
+_|
